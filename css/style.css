@@ -1,0 +1,30 @@
+.dropdown-toggle-no-caret::after {
+    display: none;
+}
+
+.dropdown-toggle-no-caret {
+    margin-left: 1em;
+}
+
+.nav-link {
+    color: White;
+}
+
+.table-full-width {
+    width: 100%;
+    table-layout: fixed;
+}
+
+div.card-block table {
+        width: 100%;
+        border-collapse: collapse;
+}
+
+div.card-block p ~ br {
+	display: none;
+}
+
+div.card-block p {
+	margin-bottom: 0;
+}
+
