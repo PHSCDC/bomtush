@@ -8,6 +8,11 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/octicons.css" rel="stylesheet">
+    <style>
+      div.card-block {
+        max-height: 500px;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-inverse bg-primary">

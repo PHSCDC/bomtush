@@ -15,13 +15,21 @@
     table-layout: fixed;
 }
 
+div.card-block {
+	overflow: scroll;
+}
+
 div.card-block table {
         width: 100%;
         border-collapse: collapse;
 }
 
-div.card-block p ~ br {
+div.card-block p ~ br, pre br {
 	display: none;
+}
+
+pre {
+	line-height: 1em;
 }
 
 div.card-block p {

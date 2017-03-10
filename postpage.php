@@ -35,6 +35,8 @@
       <p><i>[i]italic[/i]</i></p>
       <p><u>[u]underline[/u]</u></p>
       <p><s>[s]strikethrough[/s]</s></p>
+      <p><pre>[pre]fixed-width font[/pre]</pre></p>
+      <p>[l], [c], and [r] change text alignment</p>
       <pre>[table]<br>[tr] &nbsp; [td]data[/td] &nbsp; [td]more data[/td] &nbsp; [/tr]<br>[tr] &nbsp; [td]more[/td] &nbsp; [td]even more[/td] &nbsp; [/tr]<br>[/table]
       </pre>
     </div>

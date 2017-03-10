@@ -48,9 +48,9 @@ function echoPost($post)
                 <a href=\"u/" . $post["attachment"]. "\">" . $post["attachment"] . "</a>
               </div>";
       }
-      if ($post[id] % 100 == 0) {
+      if ($post['id'] % 100 == 0) {
 	echo "<div class=\"card-footer alert-success\">
-                this is the site's " . $post[id] . "th post!
+                this is the site's " . $post['id'] . "th post!
               </div>";
       }
       echo "

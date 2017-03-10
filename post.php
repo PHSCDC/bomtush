@@ -28,21 +28,22 @@ if (is_uploaded_file($_FILES["upload"]["tmp_name"])) {
 }
 
 function sanitizePost($post) {
-	$post = nl2br(htmlspecialchars($post,ENT_QUOTES),false);
+	$post = htmlspecialchars($post, ENT_QUOTES);
+	$post = nl2br($post,false);
 	$post = str_replace(" ", "&nbsp", $post);
 
 	$activetags = array();
-	$tags = array("b","i","u","table","tr","td","s");
+	$tags = array("b","i","u","table","tr","td","s","br","pre");
 	foreach ($tags as $curtag) {
 		$post = str_ireplace('['.$curtag.']', '<'.$curtag.'>', $post);
 		$post = str_ireplace('[/'.$curtag.']', '</'.$curtag.'>', $post);
 	}
 	unset($curtag);
 
-	$post = str_ireplace('[left]', '<p class="text-left">', $post);
-	$post = str_ireplace('[center]', '<p class="text-center">', $post);
-	$post = str_ireplace('[right]', '<p class="text-right">', $post);
-	$post = str_ireplace(array("[/left]","[/center]","[/right]"), '</p>', $post);
+	$post = str_ireplace('[l]', '<p class="text-left">', $post);
+	$post = str_ireplace('[c]', '<p class="text-center">', $post);
+	$post = str_ireplace('[r]', '<p class="text-right">', $post);
+	$post = str_ireplace(array("[/l]","[/c]","[/r]"), '</p>', $post);
 
 	$post = balance_tags($post);
 	$post = str_replace("[[", "[", $post);
@@ -58,7 +59,7 @@ try {
 		if (strlen($text) > 0) {
 			if (sanitizePost($text) < 64000) {
 	                	if (isset($filename) && $ok==1) {
-					$post = $conn->prepare("INSERT INTO post (author, html, date, attachment) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME(), " . $db->quote($filename) . ");");
+					$post = $conn->prepare("INSERT INTO post (author, html, date, attachment) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME(), " . $conn->quote($filename) . ");");
 	        	        }else{
 					$post = $conn->prepare("INSERT INTO post (author, html, date) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME());");
 				}
