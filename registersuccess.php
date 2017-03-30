@@ -17,7 +17,7 @@
 				<div class="card-block">
 					<h1>registered successfully!</h1>
 					<h2>you may now login.</h2>
-					<h2>we've sent you a conformation email. check your inbox or spam folder</h2>
+					<h2>we've sent you a confirmation email. be sure to check your spam folder as well as your inbox!</h2>
 					<a href="/bomtush/loginpage.php" class="btn btn-success">login</a><a href="/bomtush" class="btn">home</a>
 				</div>
 			</div>
