@@ -110,7 +110,7 @@ if(empty($errurl)) {
 			ini_set( 'display_errors', 1 );  
 			error_reporting( E_ALL );  
 			$to = $email;
-			mail($to, 'Conformation', 'Congratulations. You are registered' date('r'), ['From: info@'.php_uname('n')]);  
+			mail($to, 'Conformation', 'Congratulations. You are registered', date('r'), ['From: info@'.php_uname('n')]);  
 			echo "Email sent";
 		}
 
