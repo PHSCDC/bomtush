@@ -16,6 +16,7 @@
         include "nav.php";
       ?>
     </nav>
+    <?php
      include "getposts.php";
       include "showpost.php";
       $offset = isset($_GET["offset"]) ? $_GET["offset"] : 1;
