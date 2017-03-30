@@ -16,26 +16,19 @@
         include "nav.php";
       ?>
     </nav>
+     include "getposts.php";
+      include "showpost.php";
+      $offset = isset($_GET["offset"]) ? $_GET["offset"] : 1;
+      $user = ($_GET["user"]);
+      $postList = getUserPosts($user, $offset);
+    ?>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <div class="card mt-5">
-            <div class="card-header">
-              <img src="http://crouton.net/crouton.png" width="50" height="50">
-              <p>President Clinton</p>
-              <p>Location: Tßšçhêïñå</p>
-            </div>
-            <div class="card-header">
-              <p>President Clinton's status:</p>
-            </div>
-      
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <div class="card mt-5">
-          </div>
-        </div>
-      </div>
-    </div>
+      <?php
+        foreach($postList as $post)
+        {
+          echoPost($post);
+        }
+      ?>
     </div>
 
     <script src="js/jquery.min.js"></script>
