@@ -105,6 +105,15 @@ if(empty($errurl)) {
 		{
 			echo "An error of some sort: " . $input->errorInfo()[0] . "<br>" . $input->errorInfo()[2] . "<br>";
 		}
+		else
+		{
+			ini_set( 'display_errors', 1 );  
+			error_reporting( E_ALL );  
+			$to = $email;
+			mail($to, 'Conformation', 'Congratulations. You are registered' date('r'), ['From: info@'.php_uname('n')]);  
+			echo "Email sent";
+		}
+
 
 		$testemail = null;
 		$testuser = null;
