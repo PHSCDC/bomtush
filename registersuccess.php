@@ -17,6 +17,7 @@
 				<div class="card-block">
 					<h1>registered successfully!</h1>
 					<h2>you may now login.</h2>
+					<h2>we've sent you a conformation email. check your inbox or spam folder</h2>
 					<a href="/bomtush/loginpage.php" class="btn btn-success">login</a><a href="/bomtush" class="btn">home</a>
 				</div>
 			</div>
@@ -26,3 +27,4 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 </html>
+
