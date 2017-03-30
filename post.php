@@ -52,30 +52,34 @@ function sanitizePost($post) {
 }
 
 try {
-        if ($ok != 0) {
-                $conn = new PDO($db,$user,$pass);
-                $username = $conn->query("SELECT name FROM user where email='$author';")->fetchAll()[0]['name'];
-                echo "Username: $username <br />";
-		if (strlen($text) > 0) {
-			if (sanitizePost($text) < 64000) {
-	                	if (isset($filename) && $ok==1) {
-					$post = $conn->prepare("INSERT INTO post (author, html, date, attachment) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME(), " . $conn->quote($filename) . ");");
-	        	        }else{
-					$post = $conn->prepare("INSERT INTO post (author, html, date) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME());");
+	if (empty($author)) {
+		header('Location: /bomtush/loginpage.php');
+	} else {
+	        if ($ok != 0) {
+	                $conn = new PDO($db,$user,$pass);
+	                $username = $conn->query("SELECT name FROM user where email='$author';")->fetchAll()[0]['name'];
+	                echo "Username: $username <br />";
+			if (strlen($text) > 0) {
+				if (sanitizePost($text) < 64000) {
+		                	if (isset($filename) && $ok==1) {
+						$post = $conn->prepare("INSERT INTO post (author, html, date, attachment) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME(), " . $conn->quote($filename) . ");");
+		        	        }else{
+						$post = $conn->prepare("INSERT INTO post (author, html, date) VALUES ('$username', '" . sanitizePost($text) . "' , CURTIME());");
+					}
+				} else {
+					header('Location: postpage.php?err=your post is too long.');
 				}
 			} else {
-				header('Location: postpage.php?err=your post is too long.');
+				header('Location: postpage.php?err=your post must not be empty.');
 			}
-		} else {
-			header('Location: postpage.php?err=your post must not be empty.');
-		}
 
-		if(!$post->execute()) {
-			header('Location: postpage.php?err=something went wrong with this post. sorry about that.');
-		}
+			if(!$post->execute()) {
+				header('Location: postpage.php?err=something went wrong with this post. sorry about that.');
+			}
 
-		$post = null;
-		$conn = null;
+			$post = null;
+			$conn = null;
+		}
 	}
 }
 catch(PDOException $e) {
