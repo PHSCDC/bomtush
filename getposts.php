@@ -1,14 +1,11 @@
 <?php
-function getNewestPosts($offset)
-{
+function getNewestPosts($offset) {
 	include "config.php";
 	$offset=($offset-1)*25;
 	try {
 		$conn = new PDO($db, $user, $pass);
-		if (isset($_GET["sort"]))
-		{
-			switch ($_GET["sort"])
-			{
+		if (isset($_GET["sort"])) {
+			switch ($_GET["sort"]) {
 				case 1:
 					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET $offset;");
 					break;
@@ -22,12 +19,11 @@ function getNewestPosts($offset)
 					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET $offset;");
 					break;
 			}
-		}else{
+		} else {
 			$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET $offset;");
 		}
 
-		if(!$input->execute())
-		{
+		if(!$input->execute()) {
 			echo "Failed to read posts: " . $input->errorInfo()[0] . " " . $input->errorInfo()[2] . "<br>";
 		}
 
@@ -40,21 +36,13 @@ function getNewestPosts($offset)
 	}
 }
 
-function getUserPosts($user, $offset)
-{
+function getUserPosts($user, $offset) {
 	include "config.php";
 	$offset=($offset-1)*25;
 	try {
 		$conn = new PDO($db, $user, $pass);
-			
-		
-				
-				$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post WHERE author='$user' ORDER BY date DESC LIMIT 25 OFFSET $offset;");
-			
-			
-
-		if(!$input->execute())
-		{
+		$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post WHERE author='$user' ORDER BY date DESC LIMIT 25 OFFSET $offset;");
+		if (!$input->execute()) {
 			echo "Failed to read posts: " . $input->errorInfo()[0] . " " . $input->errorInfo()[2] . "<br>";
 		}
 
