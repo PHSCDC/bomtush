@@ -1,48 +1,39 @@
 <?php
-function echoPost($post)
-{
+function echoPost($post) {
 	include "config.php";
-          $postAge = "";
-          if($post["daysAgo"] > 0)
-          {
-            $postAge = $post["daysAgo"] . " days ago";
-          }
-          else if($post["hoursAgo"] > 0)
-          {
-            $postAge = $post["hoursAgo"] . " hours ago";
-          }
-          else if($post["minutesAgo"] > 0)
-          {
-            $postAge = $post["minutesAgo"] . " minutes ago";
-          }
-          else
-          {
-            $postAge = "less than a minute ago";
-          }
-      $conn = new PDO($db, $user, $pass);
+        $postAge = "";
+        if($post["daysAgo"] > 0) {
+        	$postAge = $post["daysAgo"] . " days ago";
+        } else if($post["hoursAgo"] > 0) {
+        	$postAge = $post["hoursAgo"] . " hours ago";
+        } else if($post["minutesAgo"] > 0) {
+        	$postAge = $post["minutesAgo"] . " minutes ago";
+	} else {
+        	$postAge = "less than a minute ago";
+        }
+	$conn = new PDO($db, $user, $pass);
 
-      $query_likes = $conn->prepare("SELECT * FROM likes WHERE post=$post[id] AND state=1");
-      $query_likes->execute();
-      $numLikes = count($query_likes->fetchAll());
+	$query_likes = $conn->prepare("SELECT * FROM likes WHERE post=$post[id] AND state=1");
+	$query_likes->execute();
+	$numLikes = count($query_likes->fetchAll());
 
-      $query_dislikes = $conn->prepare("SELECT * FROM likes WHERE post=$post[id] AND state=2");
-      $query_dislikes->execute();
-      $numDislikes = count($query_dislikes->fetchAll());
+	$query_dislikes = $conn->prepare("SELECT * FROM likes WHERE post=$post[id] AND state=2");
+	$query_dislikes->execute();
+	$numDislikes = count($query_dislikes->fetchAll());
 
-      $likesPercent = 0;
-      if($numLikes + $numDislikes > 0)
-      {
+	$likesPercent = 0;
+	if($numLikes + $numDislikes > 0) {
         $likesPercent = $numLikes / ($numLikes + $numDislikes) * 100;
-      }
-      echo "
-      <div class=\"row\">
+	}
+	echo "
+	<div class=\"row\">
         <div class=\"col-sm-1 col-lg-3\"></div>
         <div class=\"col-sm-10 col-lg-6\">
           <div class=\"card mt-4\">
             <div class=\"card-block\"> <!-- all post content goes within this div -->
               $post[html]
             </div>";
-      if (isset($post["attachment"])){
+      if (isset($post["attachment"])) {
         echo "<div class=\"card-footer alert-info\">
                 attachment:
                 <a href=\"u/" . $post["attachment"]. "\">" . $post["attachment"] . "</a>
