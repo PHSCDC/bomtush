@@ -17,11 +17,12 @@
       ?>
     </nav>
     <?php
-     include "getposts.php";
-      include "showpost.php";
-      $offset = isset($_GET["offset"]) ? $_GET["offset"] : 1;
-      $user = ($_GET["user"]);
-      $postList = getUserPosts($user, $offset);
+      if (isset($_GET["user"]):
+        include "getposts.php";
+        include "showpost.php";
+        $offset = isset($_GET["offset"]) ? $_GET["offset"] : 1;
+        $user = ($_GET["user"]);
+        $postList = getUserPosts($user, $offset);
     ?>
     <div class="container-fluid">
       <?php
@@ -29,8 +30,13 @@
         {
           echoPost($post);
         }
+      else:
       ?>
+      <h1>no user selected.</h1>
     </div>
+    <?php
+      endif;
+    ?>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/tether.min.js"></script>
