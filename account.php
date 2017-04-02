@@ -1,3 +1,8 @@
+<?php
+  if (isset($_POST["query"])) {
+    header('Location: account.php?user=' . $_POST["query"]);
+  }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,6 +38,14 @@
       else:
       ?>
       <h1>no user selected.</h1>
+      <div class="card mt-2">
+        <div class="card-block">
+          <form action="account.php" method="post">
+            <input type="text" class="form-control" id="query" name="query">
+            <button type="submit" class="btn btn-primary">submit</button>
+          </form>
+        </div>
+      </div>
     </div>
     <?php
       endif;
