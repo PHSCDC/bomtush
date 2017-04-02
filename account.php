@@ -9,7 +9,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>bootstrap will be the death of me</title>
+    <?php if (isset($_GET["user"]): ?>
+      <title>bomtush - <?php $_GET["user"] ?>'s posts</title>
+    <?php else: ?>
+      <title>bomtush - accounts</title>
+    <?php endif; ?>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/octicons.css" rel="stylesheet">
