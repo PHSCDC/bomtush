@@ -4,6 +4,7 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<link ref="stylesheet" href="css/octicons.css">
+		<title>bomtush - login</title>
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse bg-primary">
@@ -18,17 +19,17 @@
 					<h1>login</h1>
 					<form action="login.php" method="post">
 						<div class="form-group">
-							<label for="email">Email:</label>
+							<label for="email">email:</label>
 							<?php if(isset($_GET["emailerr"])) echo "<div class='alert alert-danger'>error: " . htmlspecialchars($_GET["emailerr"]) . "</div>"; ?>
 							<input type="email" class="form-control" id="email" name="email">
 						</div>
 						<div class="form-group">
-							<label for="passwd">Password:</label>
+							<label for="passwd">password:</label>
 							<?php if(isset($GET["passerr"])) echo "<div class='alert alert-danger'>error: " . htmlspecialchars($_GET["passerr"]) . "</div>"; ?>
 							<input type="password" class="form-control" id="passwd" name="passwd">
 						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary">submit</button>
 						</div>
 					</form>
 				</div>

@@ -9,7 +9,7 @@ $ok = 2;
 if (is_uploaded_file($_FILES["upload"]["tmp_name"])) {
 	$ok = 1;
 	$filename = basename($_FILES["upload"]["name"]);
-	if (file_exists("/var/www/html/bomtush/u/" . $filename)) {
+	if (file_exists("/var/www/html/bomtush/u/" . ltrim($filename,"."))) {
 		header('Location: postpage.php?err=file already exists. try uploading with a different filename than ' . $filename);
 		$ok = 0;
 	}
@@ -20,7 +20,7 @@ if (is_uploaded_file($_FILES["upload"]["tmp_name"])) {
 	}
 
 	if ($ok == 1) {
-		if (!move_uploaded_file($_FILES["upload"]["tmp_name"], "/var/www/html/bomtush/u/" . $filename)) {
+		if (!move_uploaded_file($_FILES["upload"]["tmp_name"], "/var/www/html/bomtush/u/" . ltrim($filename,"."))) {
 			header('Location: postpage.php?err=there was an unknown error while uploading your file. sorry about that.');
 			$ok = 0;
 		}
