@@ -8,13 +8,23 @@ if (isset($_COOKIE['sess_user']))
 
 	try {
                 $conn = new PDO($db,$user,$pass);
-	        $post = $conn->prepare("INSERT INTO likes (user, post, date, state) VALUES ('$author', '$postid', CURTIME(), $state);");
-	        if(!$post->execute()) {
-	                echo "it did not happen: " . $post->errorInfo()[0] . ", " . $post->errorInfo()[2] . "<br />";
-	        }
-
-	        $post = null;
-	        $conn = null;
+		$check = $conn->prepare("SELECT user FROM likes WHERE `post`=" . $conn->quote($postid) . " AND `user`=" . $conn->quote($author) . ";");
+		if (!$check->execute()) {
+			// echo "DANG it";
+		} else {
+			$makesure = $check->fetch();
+			if($makesure['user'] == $author) {
+				$post = $conn->prepare("DELETE FROM likes WHERE `post`=" . $conn->quote($postid) . " AND `user`=" . $conn->quote($author) . ";");
+			} else {
+			        $post = $conn->prepare("INSERT INTO likes (user, post, date, state) VALUES ('$author', '$postid', CURTIME(), $state);");
+			}
+		        if(!$post->execute()) {
+		               // echo "it did not happen: " . $post->errorInfo()[0] . ", " . $post->errorInfo()[2] . "<br />";
+		        }
+		}
+			$check = null;
+		        $post = null;
+		        $conn = null;
 	}
 	catch(PDOException $e) {
 	        //echo "Connection failed: " . $e->getMessage();

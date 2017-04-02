@@ -36,12 +36,12 @@ function getNewestPosts($offset) {
 	}
 }
 
-function getUserPosts($user, $offset) {
+function getUserPosts($name, $offset) {
 	include "config.php";
 	$offset=($offset-1)*25;
 	try {
 		$conn = new PDO($db, $user, $pass);
-		$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post WHERE author='$user' ORDER BY date DESC LIMIT 25 OFFSET $offset;");
+		$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post WHERE BINARY `author`='$name' ORDER BY date DESC LIMIT 25 OFFSET $offset;");
 		if (!$input->execute()) {
 			echo "Failed to read posts: " . $input->errorInfo()[0] . " " . $input->errorInfo()[2] . "<br>";
 		}

@@ -17,7 +17,7 @@
       ?>
     </nav>
     <?php
-      if (isset($_GET["user"]):
+      if (isset($_GET["user"])):
         include "getposts.php";
         include "showpost.php";
         $offset = isset($_GET["offset"]) ? $_GET["offset"] : 1;
@@ -26,17 +26,16 @@
     ?>
     <div class="container-fluid">
       <?php
+        echo "<h1>" . $_GET["user"] . "'s posts</h1>";
         foreach($postList as $post)
         {
           echoPost($post);
         }
-      else:
       ?>
-      <h1>no user selected.</h1>
     </div>
-    <?php
-      endif;
-    ?>
+    <?php else: ?>
+    <div class="container-fluid"><h1>no user selected.</h1></div>
+    <?php endif; ?>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/tether.min.js"></script>

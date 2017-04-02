@@ -47,7 +47,7 @@ function echoPost($post) {
       echo "
             <div class=\"card-footer text-muted\"> <!-- post footer goes here -->
               <div class=\"float-left\">
-                $postAge by <a href=\"#!\">$post[author]</a>
+                $postAge by <a href=\"account.php?user=$post[author]\">$post[author]</a>
               </div>
               <div class=\"float-right\">
                 <a class=\"text-muted\" href=\"like.php?postid=$post[id]&state=1\"><span class=\"octicon octicon-thumbsup\"></span> $numLikes</a> | <!-- a class changes to text-primary when liked -->

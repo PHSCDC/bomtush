@@ -71,7 +71,7 @@ if(empty($errurl)) {
 		$conn = new PDO($db,$user,$pass);
 		$testemail = $conn->prepare("SELECT email FROM user WHERE email='$email';");
 		if(!$testemail->execute()) {
-			echo "Shit it don't work";
+			echo "it don't work";
 		}
 		else {
 			$blah = $testemail->fetch(PDO::FETCH_ASSOC);
@@ -86,8 +86,8 @@ if(empty($errurl)) {
 			echo "SHOOT!";
 		}
 		else {
-			$bleh= $testuser->fetch(PDO::FETCH_ASSOC);
-			if($bleh['name'] == $name) {
+			$bleh = $testuser->fetch(PDO::FETCH_ASSOC);
+			if(strcasecmp($bleh['name'], $name) == 0) {
 				$errurl .= (empty($returnurl) ? "&" : "") . "nameerr=username already in use";
 			}
 			$bleh = null;
@@ -107,8 +107,6 @@ if(empty($errurl)) {
 		}
 		else
 		{
-			ini_set( 'display_errors', 1 );  
-			error_reporting( E_ALL );  
 			$to = $email;
 			mail($to, 'confirmation', 'congratulations. you have registered an account at bomtush. welcome to the family', date('r'), ('From: info@'.php_uname('n')));  
 			echo "Email sent";

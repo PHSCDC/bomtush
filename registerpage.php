@@ -25,7 +25,7 @@
 						<div class="form-group">
 							<label for="user">Username:</label>
 							<?php if (isset($_GET["nameerr"])) echo "<div class='alert alert-danger'>error: " . htmlspecialchars($_GET["nameerr"]) . "</div>"; ?>
-							<input type="text" class="form-control" id="user"  name="user">
+							<input type="text" class="form-control" id="user"  name="user" maxlength="64">
 						</div>
 						<div class="form-group">
 							<label for="passwd">Password:</label>
