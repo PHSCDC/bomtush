@@ -1,5 +1,5 @@
 # bomtush
-THIS IS NOT SECURE! Don't use this in a production environment. Currently live at http://phscyberdefense.org/bomtush.
+THIS IS NOT SECURE! Don't use this code in a production environment. Now please excuse us while we use this code in a production environment. Currently live at http://phscyberdefense.org/bomtush.
 
 To make this work, you must:
 
