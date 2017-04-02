@@ -4,6 +4,7 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/octicons.css">
+		<title>bomtush</title>
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse bg-primary">
