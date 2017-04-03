@@ -1,27 +1,30 @@
 <?php
 function getNewestPosts($offset) {
+	$preamble = "SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ";
+
 	include "config.php";
-	$offset=($offset-1)*25;
+	$offset = ($offset-1) * 25;
 	try {
-		$conn = new PDO($db, $user, $pass);
 		if (isset($_GET["sort"])) {
 			switch ($_GET["sort"]) {
 				case 1:
-					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET" . $conn->quote($offset) . ";");
+					$input = $conn->prepare("$preamble ORDER BY date DESC LIMIT :offset, 25;");
 					break;
 				case 2:
-					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date ASC LIMIT 25 OFFSET" . $conn->quote($offset) . ";");
+					$input = $conn->prepare("$preamble ORDER BY date ASC LIMIT :offset, 25;");
 					break;
 				case 3:
-					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY rand() DESC LIMIT 25 OFFSET" . $conn->quote($offset). ";");
+					$input = $conn->prepare("$preamble ORDER BY rand() DESC LIMIT :offset, 25;");
 					break;
 				default:
-					$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET" . $conn->quote($offset). ";");
+					$input = $conn->prepare("$preamble ORDER BY date DESC LIMIT :offset, 25;");
 					break;
 			}
 		} else {
-			$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ORDER BY date DESC LIMIT 25 OFFSET" . $conn->quote($offset) . ";");
+			$input = $conn->prepare("$preamble ORDER BY date DESC LIMIT :offset, 25;");
 		}
+
+		$input->bindParam(':offset', intval($offset));
 
 		if(!$input->execute()) {
 			echo "Failed to read posts: " . $input->errorInfo()[0] . " " . $input->errorInfo()[2] . "<br>";
@@ -37,11 +40,16 @@ function getNewestPosts($offset) {
 }
 
 function getUserPosts($name, $offset) {
+	$preamble = "SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post ";
+
 	include "config.php";
-	$offset=($offset-1)*25;
+	$offset = ($offset-1) * 25;
 	try {
-		$conn = new PDO($db, $user, $pass);
-		$input = $conn->prepare("SELECT *, DATEDIFF(CURTIME(), date) AS daysAgo, EXTRACT(HOUR FROM CURTIME()) - EXTRACT(HOUR FROM date) AS hoursAgo, EXTRACT(MINUTE FROM CURTIME()) - EXTRACT(MINUTE FROM date) AS minutesAgo FROM post WHERE author=" . $conn->quote($name) . " ORDER BY date DESC LIMIT 25 OFFSET" . $conn->quote($offset) . ";");
+		$input = $conn->prepare("$preamble WHERE author = BINARY :author ORDER BY date DESC LIMIT :offset, 25;");
+
+		$input->bindParam(':offset', $offset);
+		$input->bindParam(':author', $name);
+
 		if (!$input->execute()) {
 			echo "Failed to read posts: " . $input->errorInfo()[0] . " " . $input->errorInfo()[2] . "<br>";
 		}
